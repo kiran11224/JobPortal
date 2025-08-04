@@ -1,0 +1,116 @@
+@extends('front.layouts.app')
+@section('content')
+<section class="section-5 bg-2">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Account Settings</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            @include('front.account.sidebar')
+            <div class="col-lg-9">
+
+                {{-- Show success or error messages --}}
+                @if(session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
+                @if(session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                @endif
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                {{-- Profile Update --}}
+                <form action="{{ route('account.updateProfile') }}" method="POST">
+                    @csrf
+                    <div class="card border-0 shadow mb-4">
+                        <div class="card-body p-4">
+                            <h3 class="fs-4 mb-1">My Profile</h3>
+                            <div class="mb-4">
+                                <label class="mb-2">Name*</label>
+                                <input type="text" name="name" class="form-control" placeholder="Enter Name" value="{{ old('name', Auth::user()->name) }}">
+                            </div>
+                            <div class="mb-4">
+                                <label class="mb-2">Email*</label>
+                                <input type="email" name="email" class="form-control" placeholder="Enter Email" value="{{ old('email', Auth::user()->email) }}">
+                            </div>
+                            <div class="mb-4">
+                                <label class="mb-2">Designation</label>
+                                <input type="text" name="designation" class="form-control" placeholder="Designation" value="{{ old('designation', Auth::user()->designation) }}">
+                            </div>
+                            <div class="mb-4">
+                                <label class="mb-2">Mobile</label>
+                                <input type="text" name="mobile" class="form-control" placeholder="Mobile" value="{{ old('mobile', Auth::user()->mobile) }}">
+                            </div>
+                        </div>
+                        <div class="card-footer p-4">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+
+                {{-- Change Password Placeholder --}}
+                <div class="card border-0 shadow mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="fs-4 mb-1">Change Password</h3>
+                        <div class="mb-4">
+                            <label class="mb-2">Old Password*</label>
+                            <input type="password" placeholder="Old Password" class="form-control">
+                        </div>
+                        <div class="mb-4">
+                            <label class="mb-2">New Password*</label>
+                            <input type="password" placeholder="New Password" class="form-control">
+                        </div>
+                        <div class="mb-4">
+                            <label class="mb-2">Confirm Password*</label>
+                            <input type="password" placeholder="Confirm Password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="card-footer p-4">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- Profile Picture Upload Modal --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title pb-0">Change Profile Picture</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ route('account.updateProfilePic') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-3">
+                <label class="form-label">Profile Image</label>
+                <input type="file" class="form-control" id="image" name="image" accept="image/*">
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary mx-3">Update</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
