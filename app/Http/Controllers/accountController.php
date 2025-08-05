@@ -4,8 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
+
+
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Catagory;
+use App\Models\job_type;
+use App\Models\job;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -138,7 +144,70 @@ public function updateProfilePic(Request $request)
 }
 
 public function createJob(){
-    return view('front.account.job.create');
-}      
 
+    $catagories = Catagory::orderBy('name','ASC')->where('status',1)->get();
+    $job_types = job_type::orderBy('name','ASC')->where('status',1)->get();
+    return view('front.account.job.create',[
+        'catagories'=>$catagories,
+        'job_types'=>$job_types
+    ]); 
 }
+
+
+
+public function saveJob(Request $request)
+{
+    $rules = [
+        'title' => 'required|string|max:100',
+        'catagory' => 'required|string',
+        'job_nature' => 'required|string',
+        'vacancy' => 'required|integer|min:1',
+        'salary' => 'nullable|string|max:50',
+        'location' => 'required|string|max:100',
+        'description' => 'required|string|min:10',
+        'benefits' => 'nullable|string',
+        'responsibility' => 'nullable|string',
+        'qualifications' => 'nullable|string',
+        'keywords' => 'nullable|string',
+
+        // Company Details
+        'company_name' => 'required|string|max:100',
+        'company_location' => 'nullable|string|max:100',
+        'website' => 'nullable|url|max:100',
+    ];
+
+    $validator = Validator::make($request->all(), $rules);
+
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()
+            ->with('error', 'Please fix the errors and try again.');
+    }
+        job::create([
+        'title' => $request->title,
+        'catagory_id' => $request->catagories,
+        'job_type_id' => $request->job_nature,
+        'vacancy' => $request->vacancy,
+        'salary' => $request->salary,
+        'location' => $request->location,
+        'description' => $request->description,
+        'benefits' => $request->benefits,
+        'responsibility' => $request->responsibility,
+        'qualification' => $request->qualifications,
+        'keywords' => $request->keywords,
+        'company_name' => $request->company_name,
+        'company_location' => $request->company_location,
+        'company_website' => $request->website,
+      
+        
+    ]);
+
+    return redirect()->back()->with('success', 'Job posted successfully.');
+}
+}
+
+
+
+
+
