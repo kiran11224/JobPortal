@@ -159,18 +159,16 @@ public function saveJob(Request $request)
 {
     $rules = [
         'title' => 'required|string|max:100',
-        'catagory' => 'required|string',
-        'job_nature' => 'required|string',
+        'catagory' => 'required',
+        'job_type' => 'required',
         'vacancy' => 'required|integer|min:1',
         'salary' => 'nullable|string|max:50',
         'location' => 'required|string|max:100',
         'description' => 'required|string|min:10',
         'benefits' => 'nullable|string',
         'responsibility' => 'nullable|string',
-        'qualifications' => 'nullable|string',
+        'qualifications' => 'required|string|min:3',
         'keywords' => 'nullable|string',
-
-        // Company Details
         'company_name' => 'required|string|max:100',
         'company_location' => 'nullable|string|max:100',
         'website' => 'nullable|url|max:100',
@@ -186,10 +184,11 @@ public function saveJob(Request $request)
     }
         job::create([
         'title' => $request->title,
-        'catagory_id' => $request->catagories,
-        'job_type_id' => $request->job_nature,
+        'catagory_id' => $request->catagory,
+        'job_type_id' => $request->job_type,
         'vacancy' => $request->vacancy,
         'salary' => $request->salary,
+        'experience'=>$request->experience,
         'location' => $request->location,
         'description' => $request->description,
         'benefits' => $request->benefits,
@@ -202,7 +201,6 @@ public function saveJob(Request $request)
       
         
     ]);
-
     return redirect()->back()->with('success', 'Job posted successfully.');
 }
 }

@@ -54,9 +54,10 @@
                                             <select name="catagory" id="catagory" class="form-control">
                                                 <option value="">Select a Catagory</option>
                                                 @if ($catagories !== '')
-                                                    @foreach ($catagories as $catagories)
-                                                        <option value="{{ $catagories->id }}">{{$catagories->name }}</option>
+                                                   @foreach ($catagories as $catagory)
+                                                        <option value="{{ $catagory->id }}">{{ $catagory->name }}</option>
                                                     @endforeach
+
                                                 @endif
                                             </select>
                                             @error('category')
@@ -67,12 +68,12 @@
 
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
-                                            <label for="job_nature" class="mb-2">Job Nature<span class="req">*</span></label>
-                                            <select name="job_nature" id="job_nature" class="form-select">
+                                            <label for="job_type" class="mb-2">Job Nature<span class="req">*</span></label>
+                                            <select name="job_type" id="job_type" class="form-select">
                                                 <option value="">Select</option>
                                                 @if ($job_types !== '')
-                                                    @foreach ($job_types as $type)
-                                                        <option value="{{ $type->id }}" {{ old('job_nature') == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                                                    @foreach ($job_types as $job_type)
+                                                        <option value="{{ $job_type->id }}">{{ $job_type->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -83,7 +84,7 @@
 
                                         <div class="col-md-6 mb-4">
                                             <label for="vacancy" class="mb-2">Vacancy<span class="req">*</span></label>
-                                            <input type="number" min="1" placeholder="Vacancy" id="vacancy" name="vacancy" class="form-control" value="{{ old('vacancy') }}">
+                                            <input type="number" min="1" placeholder="Vacancy" id="vacancy" name="vacancy" class="form-control">
                                             @error('vacancy')
                                                 <p class="text-danger mt-1">{{ $message }}</p>
                                             @enderror
@@ -125,7 +126,7 @@
 
                                     <div class="mb-4">
                                         <label for="qualifications" class="mb-2">Qualifications</label>
-                                        <textarea class="form-control" name="qualifications" id="qualifications" cols="5" rows="5" placeholder="Qualifications">{{ old('qualifications') }}</textarea>
+                                        <textarea class="form-control" name="qualifications" id="qualifications" cols="5" rows="5" placeholder="Qualifications"></textarea>
                                     </div>
 
                                     <div class="mb-4">
