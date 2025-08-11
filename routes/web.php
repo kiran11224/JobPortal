@@ -28,5 +28,5 @@ Route::middleware([RedirectIfNotAuthenticated::class])->group(function () {
     Route::post('/account/updateProfilePic', [accountController::class, 'updateProfilePic'])->name('account.updateProfilePic');
     Route::get('/account/job/create', [accountController::class, 'createJob'])->name('account.jobCreate');
     Route::post('/saveJob', [accountController::class, 'saveJob'])->name('account.saveJob');
-
+    Route::get('/my-jobs', [accountController::class, 'myJobs'])->name('account.myJobs');
 });

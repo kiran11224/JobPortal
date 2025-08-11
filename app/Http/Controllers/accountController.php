@@ -168,6 +168,7 @@ public function saveJob(Request $request)
         'benefits' => 'nullable|string',
         'responsibility' => 'nullable|string',
         'qualifications' => 'required|string|min:3',
+        'experience'=> 'required',
         'keywords' => 'nullable|string',
         'company_name' => 'required|string|max:100',
         'company_location' => 'nullable|string|max:100',
@@ -184,6 +185,7 @@ public function saveJob(Request $request)
     }
         job::create([
         'title' => $request->title,
+        'user_id'=> Auth::User()->id,
         'catagory_id' => $request->catagory,
         'job_type_id' => $request->job_type,
         'vacancy' => $request->vacancy,
@@ -201,11 +203,19 @@ public function saveJob(Request $request)
       
         
     ]);
-    return redirect()->back()->with('success', 'Job posted successfully.');
-}
+    return redirect()->route('account.myJobs')->with('success', 'Job posted successfully.');
 }
 
+ public function myjobs(){
+    
+    $jobs = Job::where('user_id',Auth::user()->id)->with('jobType')->paginate(10);
+    return view('front.account.job.my-jobs',[
+        'jobs'=>$jobs
+    ]);
+ }
+}
 
+?>
 
 
 
