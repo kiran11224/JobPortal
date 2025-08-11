@@ -58,7 +58,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="border-0">
-                                    @if ($jobs !== '')
+                                    @if ($jobs->count())
                                     @foreach ($jobs as $job)
                          <tr class="active">
                                         <td>
@@ -84,7 +84,16 @@
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     <li><a class="dropdown-item" href="job-detail.html"> <i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
                                                     <li><a class="dropdown-item" href="#"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Remove</a></li>
+                                                  <li>
+                                                    <form action="{{ route('account.deleteJob', $job->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this job?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item">
+                                                            <i class="fa fa-trash"></i> Delete
+                                                        </button>
+                                                    </form>
+                                                </li>
+
                                                 </ul>
                                             </div>
                                         </td>
@@ -104,7 +113,7 @@
             </div>
         </div>
     </div>
-</section>
+
 
             </div>
         </div>

@@ -208,12 +208,22 @@ public function saveJob(Request $request)
 
  public function myjobs(){
     
-    $jobs = Job::where('user_id',Auth::user()->id)->with('jobType')->paginate(10);
+    $jobs = Job::where('user_id',Auth::user()->id)->with('jobType')->orderBy('created_at','DESC')->paginate(10);
     return view('front.account.job.my-jobs',[
         'jobs'=>$jobs
     ]);
  }
+
+public function deleteJob($id)
+{
+    $job = Job::where('user_id', auth()->id())->findOrFail($id);
+    $job->delete();
+
+    return redirect()->route('account.myJobs')
+        ->with('success', 'Job deleted successfully.');
 }
+}
+
 
 ?>
 
