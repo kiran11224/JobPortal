@@ -135,7 +135,16 @@
                                             <option value="">Select</option>
                                               <option value="1">1</option>
                                                 <option value="2">2</option>
-                                                  <option value="3">3</option>
+                                                 <option value="3">3</option>
+                                                  <option value="4">4</option>
+                                                  <option value="5">5</option>
+                                                  <option value="6">6</option>
+                                                  <option value="7">7</option>
+                                                  <option value="8">8</option>
+                                                  <option value="9">9</option>
+                                                  <option value="10">10</option>
+                                                  <option value="10+">10+</option>
+                                              
                                         </select>
                                         @error('experience')
                                             <p class="text-danger mt-1">{{ $message }}</p>
@@ -150,9 +159,9 @@
                                     <h3 class="fs-4 mb-1 mt-5 border-top pt-5">Company Details</h3>
 
                                     <div class="row">
-                                        <div class="mb-4 col-md-6">
-                                            <label for="company_name" class="mb-2">Name<span class="req">*</span></label>
+                                        <label for="company_name" class="mb-2">Name<span class="req">*</span></label>
                                             <input type="text" placeholder="Company Name" id="company_name" name="company_name" class="form-control" value="{{ old('company_name') }}">
+                        ☻                <div class="mb-4 col-md-6">
                                             @error('company_name')
                                                 <p class="text-danger mt-1">{{ $message }}</p>
                                             @enderror
