@@ -60,8 +60,19 @@ class jobController extends Controller
 
 
     $jobs = $jobs->with('jobType')->orderBy('created_at', 'DESC')->paginate(9)->withQueryString();
-
     return view('front.layouts.jobs', compact('catagory', 'jobTypes', 'jobs'));
+}
+
+public function jobDetail ($id){
+   {
+        $job = Job::where('id', $id)
+                   ->where('status', 1)->with(['jobType','catagory'])
+                   ->firstOrFail();   
+
+      
+        return view('front.jobDetail', compact('job'));
+    }
+   
 }
 }
 

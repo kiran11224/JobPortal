@@ -7,9 +7,22 @@ use App\Models\job;
 
 class homeController extends Controller
 {
-public function index()
+public function index(Request $request)
     {
-        $catagories = Catagory::where('status',1)->orderBy('name','ASC')->take(8)->get();
+
+     $query = Job::where('status', 1)->with('jobType');
+
+    if ($request->sort == 'latest') {
+        $query->orderBy('created_at', 'DESC');
+    } elseif ($request->sort == 'oldest') {
+        $query->orderBy('created_at', 'ASC');
+    } else {
+        $query->orderBy('created_at', 'DESC'); // default latest
+    }
+
+    $jobs = $query->paginate(10);
+
+    $catagories = Catagory::where('status',1)->orderBy('name','ASC')->take(8)->get();
 
        $featuredJob = job::where('isFeatured',1)
                         ->with('jobType')

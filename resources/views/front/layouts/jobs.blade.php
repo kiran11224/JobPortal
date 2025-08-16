@@ -9,13 +9,16 @@
                 </div>
                 <div class="col-6 col-md-2">
                     <div class="align-end">
-                        <select name="sort" id="sort" class="form-control">
-                            <option value="">Latest</option>
-                            <option value="">Oldest</option>
-                        </select>
+                        <form method="GET" action="{{ route('jobs') }}">
+                            <select name="sort" id="sort" class="form-control" onchange="this.form.submit()">
+                                <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Latest</option>
+                                <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Oldest</option>
+                            </select>
+                        </form>
                     </div>
                 </div>
-            </div>
+
+            </div> 
 
             <div class="row pt-5">
 
@@ -74,8 +77,12 @@
                                 </select>
                             </div>
 
-                            <div class="mb-4">
+                            <div class="mb-2">
                                 <button type="submit" class="btn btn-primary w-100">Search</button>
+                            </div>
+                            <div class="mb-4">
+                                <button type="submit" class="btn btn-primary w-100">Reset</button>
+                                
                             </div>
                         </div>
                     </form>
@@ -117,7 +124,7 @@
                                                     </div>
 
                                                     <div class="d-grid mt-3">
-                                                        <a href="job-detail.html" class="btn btn-primary btn-lg">Details</a>
+                                                        <a href="{{ route('jobDetail',$job->id) }}" class="btn btn-primary btn-lg">Details</a>
                                                     </div>
                                                 </div>
                                             </div>

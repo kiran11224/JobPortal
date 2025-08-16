@@ -1,3 +1,4 @@
+
 @charset "UTF-8";
 /* Colours */
 /* Fonts */
@@ -10020,9 +10021,10 @@ footer .nav-link {
   content: '';
 }
 /* '' */
-.text-none div a {
-  text-decoration: none;
+a, a:hover, a:focus {
+    text-decoration: none !important;
 }
+
 
 
                                       /* profile pic update css */
